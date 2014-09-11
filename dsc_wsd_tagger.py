@@ -9,6 +9,7 @@
 
 
 import sys
+import time
 import codecs
 import os
 import subprocess
@@ -182,6 +183,7 @@ def generate_xml_semcor(tokens,final_results):
 
 
 if __name__ == '__main__':
+    print >> sys.stderr, 'Timestamp VUA-svm-wsd start in-command: ' + str(int(time.time()*1000))    
     if sys.stdin.isatty():
         print>>sys.stderr,'Error. Usage:'
         print>>sys.stderr,'\tcat file | ',sys.argv[0],' --naf (optional: input is NAF, also output)'
@@ -238,6 +240,8 @@ if __name__ == '__main__':
         features = extract_features(idx,tokens)
         features_for_tokenid[token_id] = features
     ##############################
+
+    print >> sys.stderr, 'Timestamp VUA-svm-wsd start work: ' + str(int(time.time()*1000))    
     
     senses_for_tokenid = {}
     pos_for_sense = {}
@@ -286,6 +290,9 @@ if __name__ == '__main__':
                     predicted_label,_,predicted_values = svm_predict([0],[encodedFeatures],model,"-b 1 -q")
                     probability_for_positive = predicted_values[0][0]
                     results_for_tokenid[token_id].append((sense,probability_for_positive))
+
+    print >> sys.stderr, 'Timestamp VUA-svm-wsd end work: ' + str(int(time.time()*1000))    
+
     ######
     # Resolve and assign the most possible
     if type_input==NAF_INPUT:
@@ -317,4 +324,5 @@ if __name__ == '__main__':
         generate_xml_semcor(tokens,final_results)
     ################
 
+    print >> sys.stderr, 'Timestamp VUA-svm-wsd end in-command: ' + str(int(time.time()*1000))    
     sys.exit(0)
