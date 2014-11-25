@@ -201,7 +201,9 @@ if __name__ == '__main__':
         
     print>>sys.stderr,'Type of input/output:',type_input
             
+    print >> sys.stderr, 'Timestamp VUA-svm-wsd start setup: ' + str(int(time.time()*1000))    
     dictionary = loadDictionary(os.path.join(MODELS_FOLDER,'dictionary'))
+    print >> sys.stderr, 'Timestamp VUA-svm-wsd end setup: ' + str(int(time.time()*1000))    
     tokens = []
     naf_obj = None
     lemma_pos_lemmaid_for_tokid = {}
